@@ -517,7 +517,7 @@ en vert, qui défilent rapidement → **gros effet “terminal de hacker”**.
 </details>
 
 <details>
-<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+<summary>  3. “Hack visuel” de la page (fond noir + texte vert) </summary>
 
 
 ## 3. “Hack visuel” de la page (fond noir + texte vert)
@@ -548,7 +548,7 @@ document.body.style = "";
 </details>
 
 <details>
-<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+<summary>  4. Message “scan” avec animation simple </summary>
 
 ## 4. Message “scan” avec animation simple
 
@@ -583,7 +583,7 @@ Scan terminé : aucune menace détectée.
 </details>
 
 <details>
-<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+<summary> 5. Dessin ASCII simple (pyramide) </summary>
 
 
 ## 5. Dessin ASCII simple (pyramide)
@@ -616,7 +616,7 @@ Tu peux dire aux étudiants : *“Vous venez de faire un dessin en ASCII avec un
 </details>
 
 <details>
-<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+<summary>  6. Popup façon “terminal secret” (alerte + console) </summary>
 
 ## 6. Popup façon “terminal secret” (alerte + console)
 
@@ -639,6 +639,8 @@ console.log("%cBienvenue dans le terminal secret (faux).", "color:#0f0; font-wei
 # Annexe 2
 
 
+<details>
+<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
 
 ## 1. Vraie animation “Matrix” en plein écran (canvas)
 
@@ -708,7 +710,12 @@ const c = document.getElementById("matrix-hack-canvas");
 if (c) c.remove();
 ```
 
----
+
+</details>
+
+<details>
+<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
+
 
 ## 2. Écran d’alerte rouge “SYSTEM BREACH” (overlay animé)
 
@@ -764,7 +771,10 @@ const ov = document.getElementById("breach-overlay");
 if (ov) ov.remove();
 ```
 
----
+</details>
+
+<details>
+<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
 
 ## 3. Faux “scan de système” + barre de progression dans la console
 
@@ -801,7 +811,11 @@ if (ov) ov.remove();
 👉 **Effet attendu :**
 La console “bouge” en continu, barre qui se remplit, très *terminal admin sécurité*.
 
----
+
+</details>
+
+<details>
+<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
 
 ## 4. Animation de texte qui “se décrypte” (titre de la page)
 
@@ -839,7 +853,10 @@ La console “bouge” en continu, barre qui se remplit, très *terminal admin s
 👉 **Effet attendu :**
 Le titre se met à “glitcher”, puis lettre par lettre il revient à la phrase originale.
 
----
+</details>
+
+<details>
+<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
 
 ## 5. Vibration / tremblement de l’écran (screen shake)
 
@@ -877,7 +894,12 @@ Le titre se met à “glitcher”, puis lettre par lettre il revient à la phras
 👉 **Effet attendu :**
 La page bouge dans tous les sens pendant 2–3 secondes, puis se stabilise.
 
----
+
+
+</details>
+
+<details>
+<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
 
 ## 6. Combo “animation terminal” dans la console (spinner + log)
 
@@ -913,6 +935,9 @@ La page bouge dans tous les sens pendant 2–3 secondes, puis se stabilise.
 ```js
 clearInterval(window.__spinnerId);
 ```
+
+
+</details>
 
 
 
