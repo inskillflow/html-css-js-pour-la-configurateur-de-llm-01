@@ -342,11 +342,7 @@ Pour toute question sur les cours :
 - Testez les exemples fournis
 - Contactez votre enseignant
 
----
 
 **Bon courage dans votre apprentissage !**
 
-*Ces cours ont été conçus avec 30 ans d'expérience pédagogique pour vous offrir une progression optimale.*
-
-**Dernière mise à jour :** Novembre 2024
 
