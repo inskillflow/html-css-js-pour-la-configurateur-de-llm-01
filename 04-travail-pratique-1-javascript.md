@@ -478,7 +478,14 @@ console.log(
 **Effet attendu :**
 Un énorme “HACKED” vert fluo s’affiche dans la console, sur fond noir, comme dans un film.
 
----
+
+</details>
+
+
+<details>
+
+<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+
 
 ## 2. Pluie de codes verts (style Matrix) dans la console
 
@@ -506,7 +513,12 @@ La console se remplit de lignes comme :
 
 en vert, qui défilent rapidement → **gros effet “terminal de hacker”**.
 
----
+
+</details>
+
+<details>
+<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+
 
 ## 3. “Hack visuel” de la page (fond noir + texte vert)
 
@@ -533,7 +545,10 @@ Pour **revenir à peu près normal** (simple reset grossier) :
 document.body.style = "";
 ```
 
----
+</details>
+
+<details>
+<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
 
 ## 4. Message “scan” avec animation simple
 
@@ -564,7 +579,12 @@ Scan terminé : aucune menace détectée.
 
 → petit côté “outil de scan de film de hackers”, mais c’est juste du texte.
 
----
+
+</details>
+
+<details>
+<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
+
 
 ## 5. Dessin ASCII simple (pyramide)
 
@@ -593,7 +613,10 @@ Une pyramide de `*` s’affiche dans la console :
 
 Tu peux dire aux étudiants : *“Vous venez de faire un dessin en ASCII avec une boucle for.”*
 
----
+</details>
+
+<details>
+<summary>  2. Pluie de codes verts (style Matrix) dans la console </summary>
 
 ## 6. Popup façon “terminal secret” (alerte + console)
 
