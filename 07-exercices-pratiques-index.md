@@ -39,7 +39,7 @@ Trouvez la section En-tête (ligne ~15), juste après le paragraphe existant.
 ### Code à Ajouter
 
 ```html
-<p class="text-gray-500 text-sm">Dernière mise à jour : Novembre 2024</p>
+<p class="text-gray-500 text-sm">Dernière mise à jour : Novembre 2025</p>
 ```
 
 ### Résultat Attendu
