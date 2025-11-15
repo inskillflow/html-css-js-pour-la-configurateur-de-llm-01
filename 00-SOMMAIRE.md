@@ -6,7 +6,7 @@ Cette formation complète vous initie au développement web à travers **6 cours
 
 ## Fichiers de la Formation
 
-### 📋 Guide Principal
+### Guide Principal
 
 **README-COURS.md**
 - Guide complet de la formation
@@ -19,7 +19,7 @@ Cette formation complète vous initie au développement web à travers **6 cours
 
 ---
 
-### 📚 Les 6 Cours Progressifs
+### Les 6 Cours Progressifs
 
 #### Cours 01 : Les Bases de HTML
 **Fichier :** `01-les-bases-html.md`  
@@ -110,7 +110,7 @@ Cette formation complète vous initie au développement web à travers **6 cours
 
 ---
 
-### 🎯 Projet Pratique
+### Projet Pratique
 
 **index.html**
 - Application complète : Configurateur de Paramètres LLM
@@ -360,8 +360,5 @@ Cette formation a été conçue avec soin pour vous offrir une progression optim
 
 **Commencez maintenant par ouvrir README-COURS.md !**
 
----
 
-*Formation créée avec 30 ans d'expérience pédagogique*  
-*Novembre 2024*
 
