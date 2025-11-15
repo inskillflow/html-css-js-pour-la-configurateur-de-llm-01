@@ -298,3 +298,157 @@ Tu peux leur donner un petit énoncé du genre :
 > 5. Utiliser `confirm` pour demander à l’utilisateur s’il veut afficher un “résumé”.
 > 6. Si oui, afficher le résumé dans la console avec `console.log`.
 
+
+
+
+## 8 . Correction
+
+
+Je suppose que vous avez choisi :
+
+```js
+let prenom = "Alice";
+let age = 25;
+let ville = "Montréal";
+let cours = "JavaScript";
+```
+
+Tu pourras adapter les valeurs au besoin.
+
+
+
+## Travail Console 1 — Sorties attendues (exemple de correction)
+
+> **8.1. Ouvrir la console JavaScript (F12 → Console).**
+
+Aucune sortie attendue, c’est juste de la mise en place.
+
+---
+
+> **8.2. Créer des variables `prenom`, `age`, `ville`, `cours`.**
+
+Code typique dans la console :
+
+```js
+let prenom = "Alice";
+let age = 25;
+let ville = "Montréal";
+let cours = "JavaScript";
+```
+
+**Sortie attendue :**
+
+Dans la console, **aucune sortie particulière** (juste l’écho de la ligne ou `undefined` selon le navigateur).
+Le plus important : les variables existent sans erreur.
+
+---
+
+> **8.3. Afficher dans la console une phrase complète avec ces informations.**
+
+Exemple de code :
+
+```js
+console.log(
+  "Je m'appelle " + prenom + ", j'ai " + age + " ans, j'habite à " + ville + " et je suis le cours " + cours + "."
+);
+```
+
+**Sortie attendue dans la console :**
+
+```text
+Je m'appelle Alice, j'ai 25 ans, j'habite à Montréal et je suis le cours JavaScript.
+```
+
+(Le texte exact dépend des valeurs choisies par l’étudiant, mais la structure doit être similaire.)
+
+---
+
+> **8.4. Utiliser `alert` pour afficher un message de bienvenue personnalisé.**
+
+Exemple de code :
+
+```js
+alert("Bienvenue " + prenom + " dans le cours " + cours + " !");
+```
+
+**Sortie attendue :**
+
+Une **fenêtre popup** apparaît avec :
+
+```text
+Bienvenue Alice dans le cours JavaScript !
+```
+
+L’étudiant doit cliquer sur **OK** pour continuer.
+
+---
+
+> **8.5. Utiliser `confirm` pour demander à l’utilisateur s’il veut afficher un “résumé”.**
+
+Exemple de code :
+
+```js
+let afficherResume = confirm("Veux-tu afficher un résumé de ton profil ?");
+```
+
+**Sortie attendue :**
+
+1. Une fenêtre de confirmation apparaît avec le texte :
+
+   ```text
+   Veux-tu afficher un résumé de ton profil ?
+   ```
+
+   et deux boutons : **OK** / **Annuler**.
+
+2. Selon le choix :
+
+   * Si l’utilisateur clique sur **OK** → la variable `afficherResume` vaut `true`.
+   * Si l’utilisateur clique sur **Annuler** → la variable `afficherResume` vaut `false`.
+
+Dans la console, si l’apprenant tape ensuite simplement :
+
+```js
+afficherResume
+```
+
+il verra :
+
+```text
+true
+```
+
+ou
+
+```text
+false
+```
+
+
+
+> **8.6. Si oui, afficher le résumé dans la console avec `console.log`.**
+
+Exemple de code :
+
+```js
+if (afficherResume) {
+  console.log(
+    "Résumé : " +
+    prenom + " a " + age + " ans, habite à " + ville +
+    " et suit le cours " + cours + "."
+  );
+}
+```
+
+**Sortie attendue si l’utilisateur a cliqué sur OK (true) :**
+
+```text
+Résumé : Alice a 25 ans, habite à Montréal et suit le cours JavaScript.
+```
+
+**Sortie attendue si l’utilisateur a cliqué sur Annuler (false) :**
+
+Aucune nouvelle ligne `console.log` ne s’affiche.
+(Le bloc `if` ne s’exécute pas.)
+
+
