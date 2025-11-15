@@ -284,10 +284,9 @@ Assembler `variables + console.log + alert + confirm` dans un mini scénario.
    console.log(`${prenomUser} aura ${ageDans5Ans} ans dans 5 ans.`);
    ```
 
----
 
-## 7. Idée de “devoir console” pour étudiants
 
+## 7. Devoir
 Tu peux leur donner un petit énoncé du genre :
 
 > **Travail Console 1 :**
