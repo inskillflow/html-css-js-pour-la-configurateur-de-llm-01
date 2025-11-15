@@ -452,3 +452,446 @@ Aucune nouvelle ligne `console.log` ne s’affiche.
 (Le bloc `if` ne s’exécute pas.)
 
 
+
+<br/>
+
+# Annexe 1
+
+
+
+
+## 1. Titre “HACKED” stylé dans la console
+
+<details>
+
+<summary> 1. Titre “HACKED” stylé dans la console </summary>
+
+À taper tel quel dans la console :
+
+```js
+console.log(
+  "%c  H A C K E D  ",
+  "color: #00ff00; background: #000; font-size: 40px; font-weight: bold; text-shadow: 0 0 10px #00ff00; padding: 10px;"
+);
+```
+
+**Effet attendu :**
+Un énorme “HACKED” vert fluo s’affiche dans la console, sur fond noir, comme dans un film.
+
+---
+
+## 2. Pluie de codes verts (style Matrix) dans la console
+
+```js
+let matrixId = setInterval(() => {
+  const line = Math.random().toString(16).substring(2, 18).toUpperCase();
+  console.log("%c" + line, "color:#00ff00; font-family: monospace;");
+}, 100);
+```
+
+Pour **arrêter** la pluie :
+
+```js
+clearInterval(matrixId);
+```
+
+**Effet attendu :**
+La console se remplit de lignes comme :
+
+```text
+3AF9C2D87B193F0A
+7E21B9D3A4F6C0B1
+...
+```
+
+en vert, qui défilent rapidement → **gros effet “terminal de hacker”**.
+
+---
+
+## 3. “Hack visuel” de la page (fond noir + texte vert)
+
+À taper dans la console :
+
+```js
+document.body.style.backgroundColor = "black";
+document.body.style.color = "#00ff00";
+document.body.style.fontFamily = "monospace";
+```
+
+**Effet attendu :**
+Toute la page web devient :
+
+* fond noir
+* texte vert
+* police monospace
+
+→ ça donne l’impression que le site a été transformé en vieux terminal.
+
+Pour **revenir à peu près normal** (simple reset grossier) :
+
+```js
+document.body.style = "";
+```
+
+---
+
+## 4. Message “scan” avec animation simple
+
+```js
+let step = 0;
+let scanId = setInterval(() => {
+  step++;
+  console.log("Scanning system" + ".".repeat(step % 4));
+  if (step > 20) {
+    clearInterval(scanId);
+    console.log("%cScan terminé : aucune menace détectée.", "color:#00ff00; font-weight:bold;");
+  }
+}, 150);
+```
+
+**Effet attendu :**
+
+Dans la console, tu vois :
+
+```text
+Scanning system.
+Scanning system..
+Scanning system...
+Scanning system.
+...
+Scan terminé : aucune menace détectée.
+```
+
+→ petit côté “outil de scan de film de hackers”, mais c’est juste du texte.
+
+---
+
+## 5. Dessin ASCII simple (pyramide)
+
+```js
+let hauteur = 8;
+for (let i = 1; i <= hauteur; i++) {
+  let espaces = " ".repeat(hauteur - i);
+  let etoiles = "*".repeat(2 * i - 1);
+  console.log(espaces + etoiles + espaces);
+}
+```
+
+**Effet attendu :**
+Une pyramide de `*` s’affiche dans la console :
+
+```text
+       *
+      ***
+     *****
+    *******
+   *********
+  ***********
+ *************
+***************
+```
+
+Tu peux dire aux étudiants : *“Vous venez de faire un dessin en ASCII avec une boucle for.”*
+
+---
+
+## 6. Popup façon “terminal secret” (alerte + console)
+
+```js
+alert("Accès au terminal sécurisé accordé (simulation). Ouvrez la console F12.");
+console.log("%cBienvenue dans le terminal secret (faux).", "color:#0f0; font-weight:bold;");
+```
+
+**Effet attendu :**
+
+* Une popup s’ouvre avec un message “sérieux”
+* Puis la console montre un message en vert.
+
+
+</details>
+
+
+<br/>
+
+# Annexe 2
+
+
+
+## 1. Vraie animation “Matrix” en plein écran (canvas)
+
+**Effet :** pluie de caractères verts qui tombent sur toute la page.
+**Utilisation :** copie-colle TOUT dans la console, Entrée.
+
+```js
+(function () {
+  // Création du canvas plein écran
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.id = "matrix-hack-canvas";
+  canvas.style.position = "fixed";
+  canvas.style.top = 0;
+  canvas.style.left = 0;
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.zIndex = 999999;
+  canvas.style.pointerEvents = "none"; // ne bloque pas les clics
+  document.body.appendChild(canvas);
+
+  // Ajuste la taille au viewport
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  const letters = "01ZXCVBNMASDFGHJKLQWERTYUIOP";
+  const fontSize = 16;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array.from({ length: columns }, () => Math.floor(Math.random() * canvas.height));
+
+  function draw() {
+    // fond noir transparent pour effet de trainée
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#0F0";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      ctx.fillText(text, x, y);
+
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      } else {
+        drops[i]++;
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
+```
+
+👉 **Pour arrêter / enlever l’effet :**
+
+```js
+const c = document.getElementById("matrix-hack-canvas");
+if (c) c.remove();
+```
+
+---
+
+## 2. Écran d’alerte rouge “SYSTEM BREACH” (overlay animé)
+
+**Effet :** gros écran rouge semi-transparent, texte qui flash au milieu.
+**Utilisation :** colle dans la console.
+
+```js
+(function () {
+  if (document.getElementById("breach-overlay")) return;
+
+  const overlay = document.createElement("div");
+  overlay.id = "breach-overlay";
+  overlay.style.position = "fixed";
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.background = "rgba(150, 0, 0, 0.7)";
+  overlay.style.zIndex = 999998;
+  overlay.style.display = "flex";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.pointerEvents = "none";
+
+  const text = document.createElement("div");
+  text.textContent = "SYSTEM BREACH";
+  text.style.color = "#fff";
+  text.style.fontFamily = "Impact, system-ui, sans-serif";
+  text.style.fontSize = "6vw";
+  text.style.letterSpacing = "0.4em";
+  text.style.textShadow = "0 0 20px #ff0000, 0 0 40px #ff0000";
+  text.style.textAlign = "center";
+
+  overlay.appendChild(text);
+  document.body.appendChild(overlay);
+
+  let visible = true;
+  const intervalId = setInterval(() => {
+    visible = !visible;
+    text.style.opacity = visible ? "1" : "0.2";
+  }, 200);
+
+  // on garde l'id pour pouvoir arrêter
+  window.__breachOverlayInterval = intervalId;
+})();
+```
+
+👉 **Pour l’enlever :**
+
+```js
+clearInterval(window.__breachOverlayInterval);
+const ov = document.getElementById("breach-overlay");
+if (ov) ov.remove();
+```
+
+---
+
+## 3. Faux “scan de système” + barre de progression dans la console
+
+**Effet :** progression avec barres `##########` + messages qui montent à 100 %.
+
+```js
+(function () {
+  let step = 0;
+  const total = 30;
+
+  const intervalId = setInterval(() => {
+    step++;
+    const percent = Math.floor((step / total) * 100);
+    const barLength = 20;
+    const filled = Math.floor((percent / 100) * barLength);
+    const empty = barLength - filled;
+    const bar = "[" + "#".repeat(filled) + " ".repeat(empty) + "]";
+
+    console.clear();
+    console.log("%cInitialisation du scan…", "color:#0f0; font-weight:bold;");
+    console.log(bar + " " + percent + "%");
+    console.log("Analyse des ports...");
+    console.log("Analyse des processus...");
+    console.log("Analyse de la mémoire...");
+
+    if (step >= total) {
+      clearInterval(intervalId);
+      console.log("%cScan terminé : 0 menaces détectées.", "color:#0f0; font-weight:bold;");
+    }
+  }, 150);
+})();
+```
+
+👉 **Effet attendu :**
+La console “bouge” en continu, barre qui se remplit, très *terminal admin sécurité*.
+
+---
+
+## 4. Animation de texte qui “se décrypte” (titre de la page)
+
+**Effet :** le texte d’un titre (H1) passe par des caractères aléatoires qui se stabilisent sur le vrai texte (effet “décryptage”).
+
+```js
+(function () {
+  const h1 = document.querySelector("h1") || document.body;
+  const finalText = h1.textContent || "ACCESS GRANTED";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&";
+
+  let frame = 0;
+  const maxFrames = finalText.length * 6;
+
+  const intervalId = setInterval(() => {
+    frame++;
+    let out = "";
+    for (let i = 0; i < finalText.length; i++) {
+      if (i * 6 < frame) {
+        out += finalText[i];
+      } else {
+        out += letters[Math.floor(Math.random() * letters.length)];
+      }
+    }
+    h1.textContent = out;
+
+    if (frame > maxFrames) {
+      clearInterval(intervalId);
+      h1.textContent = finalText;
+    }
+  }, 50);
+})();
+```
+
+👉 **Effet attendu :**
+Le titre se met à “glitcher”, puis lettre par lettre il revient à la phrase originale.
+
+---
+
+## 5. Vibration / tremblement de l’écran (screen shake)
+
+**Effet :** tout le contenu de la page tremble comme un impact.
+
+```js
+(function () {
+  const body = document.body;
+  if (body.classList.contains("shake-active")) return;
+
+  const originalTransition = body.style.transition;
+  const originalTransform = body.style.transform;
+
+  body.classList.add("shake-active");
+  body.style.transition = "transform 0.05s";
+
+  let count = 0;
+  const max = 40;
+
+  const intervalId = setInterval(() => {
+    const x = (Math.random() - 0.5) * 20;
+    const y = (Math.random() - 0.5) * 20;
+    body.style.transform = `translate(${x}px, ${y}px)`;
+    count++;
+    if (count > max) {
+      clearInterval(intervalId);
+      body.style.transform = originalTransform;
+      body.style.transition = originalTransition;
+      body.classList.remove("shake-active");
+    }
+  }, 50);
+})();
+```
+
+👉 **Effet attendu :**
+La page bouge dans tous les sens pendant 2–3 secondes, puis se stabilise.
+
+---
+
+## 6. Combo “animation terminal” dans la console (spinner + log)
+
+**Effet :** un petit spinner tourne dans la console, comme une vraie commande qui tourne.
+
+```js
+(function () {
+  const frames = ["|", "/", "-", "\\"];
+  let i = 0;
+  let ticks = 0;
+  const maxTicks = 60;
+
+  const id = setInterval(() => {
+    const frame = frames[i % frames.length];
+    i++;
+    ticks++;
+    console.clear();
+    console.log("%cExécution du script de maintenance...", "color:#0f0;");
+    console.log("[" + frame + "] Traitement en cours...");
+    if (ticks >= maxTicks) {
+      clearInterval(id);
+      console.clear();
+      console.log("%cMaintenance terminée avec succès.", "color:#0f0; font-weight:bold;");
+    }
+  }, 100);
+
+  window.__spinnerId = id;
+})();
+```
+
+👉 **Pour stopper manuellement :**
+
+```js
+clearInterval(window.__spinnerId);
+```
+
+
+
+
+
