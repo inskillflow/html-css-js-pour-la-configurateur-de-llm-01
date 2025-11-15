@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurateur de Paramètres LLM</title>
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-8">
+    
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- En-tête -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Configurateur de Paramètres LLM</h1>
+            <p class="text-gray-600">Sélectionnez un profil et un rôle pour configurer automatiquement les paramètres</p>
+        </div>
+
+        <!-- Sélections -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Sélection du Profil -->
+                <div>
+                    <label for="profile" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Profil de réponse
+                    </label>
+                    <select id="profile" 
+                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors">
+                        <option value="">-- Choisir un profil --</option>
+                        <option value="factuel-court">Factuel Court (1 phrase)</option>
+                        <option value="factuel-developpe">Factuel Développé (120-160 mots)</option>
+                        <option value="nuance">Bref + Nuancé (30-50 mots)</option>
+                        <option value="creatif-court">Créatif Court (25-40 mots)</option>
+                        <option value="creatif-developpe">Créatif Développé (150-200 mots)</option>
+                        <option value="hybride">Hybride Anti-répétition (150-200 mots)</option>
+                    </select>
+                </div>
+
+                <!-- Sélection du Rôle -->
+                <div>
+                    <label for="role" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Rôle du modèle
+                    </label>
+                    <select id="role" 
+                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors">
+                        <option value="">-- Choisir un rôle --</option>
+                        <option value="assistant-friendly">Assistant Friendly</option>
+                        <option value="expert-professionnel">Expert Professionnel</option>
+                        <option value="enseignant-pedagogique">Enseignant Pédagogique</option>
+                        <option value="creative-writer">Creative Writer</option>
+                        <option value="analyste-technique">Analyste Technique</option>
+                    </select>
+                </div>
+                
+            </div>
+
+            <!-- Bouton Appliquer -->
+            <button id="applyBtn" 
+                    class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md">
+                Appliquer la configuration
+            </button>
+        </div>
+
+        <!-- Affichage des Paramètres -->
+        <div id="parametersDisplay" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Paramètres Configurés</h2>
+            
+            <!-- Rôle Sélectionné -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+                <p class="font-semibold text-gray-700">Rôle :</p>
+                <p id="selectedRole" class="text-lg text-blue-700"></p>
+            </div>
+
+            <!-- Prompt Généré -->
+            <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-300 p-6 mb-6 rounded-lg">
+                <h3 class="text-xl font-bold text-purple-800 mb-3">Prompt Généré</h3>
+                <div class="bg-white p-4 rounded border border-purple-200">
+                    <p id="generatedPrompt" class="text-gray-800 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- Exemple de Réponse -->
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 p-6 mb-6 rounded-lg">
+                <h3 class="text-xl font-bold text-green-800 mb-3">Exemple de Réponse Attendue</h3>
+                <div class="bg-white p-4 rounded border border-green-200">
+                    <p id="exampleResponse" class="text-gray-800 leading-relaxed italic"></p>
+                </div>
+            </div>
+
+            <!-- Grille des paramètres -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Temperature -->
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-700">Temperature</span>
+                        <span id="tempValue" class="text-2xl font-bold text-orange-600">-</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Créativité (0=précis, 2=créatif)</p>
+                </div>
+
+                <!-- Max Tokens -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-700">Max Tokens</span>
+                        <span id="maxTokensValue" class="text-2xl font-bold text-green-600">-</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Longueur maximale</p>
+                </div>
+
+                <!-- Top P -->
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-700">Top P</span>
+                        <span id="topPValue" class="text-2xl font-bold text-purple-600">-</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Diversité des mots</p>
+                </div>
+
+                <!-- Frequency Penalty -->
+                <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg border border-red-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-700">Frequency Penalty</span>
+                        <span id="freqPenaltyValue" class="text-2xl font-bold text-red-600">-</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Éviter les répétitions</p>
+                </div>
+
+                <!-- Presence Penalty -->
+                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-4 rounded-lg border border-indigo-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-700">Presence Penalty</span>
+                        <span id="presPenaltyValue" class="text-2xl font-bold text-indigo-600">-</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Diversité des sujets</p>
+                </div>
+
+                <!-- But Attendu -->
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg border border-gray-200">
+                    <div class="mb-2">
+                        <span class="text-sm font-semibold text-gray-700">But Attendu</span>
+                    </div>
+                    <p id="butAttendu" class="text-sm text-gray-700 font-medium">-</p>
+                </div>
+
+            </div>
+
+            <!-- Description du profil -->
+            <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                <p class="font-semibold text-gray-700 mb-2">Description du profil :</p>
+                <p id="profileDescription" class="text-gray-600"></p>
+            </div>
+        </div>
+
+        <!-- Footer informatif -->
+        <div class="bg-gray-800 text-white rounded-lg shadow-md p-6">
+            <h3 class="font-bold mb-3">Guide des Paramètres</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <p class="font-semibold text-blue-300">Temperature (0-2)</p>
+                    <p class="text-gray-300">Contrôle la créativité. 0 = réponses précises et déterministes, 2 = très créatif</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-green-300">Max Tokens</p>
+                    <p class="text-gray-300">Nombre maximum de tokens (mots) dans la réponse</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-purple-300">Top P (0-1)</p>
+                    <p class="text-gray-300">Diversité des mots. 1 = tous les mots possibles, 0.1 = seuls les plus probables</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-red-300">Frequency Penalty (0-2)</p>
+                    <p class="text-gray-300">Pénalise les mots déjà utilisés pour éviter les répétitions</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-indigo-300">Presence Penalty (0-2)</p>
+                    <p class="text-gray-300">Encourage à parler de nouveaux sujets</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript avec IF/ELSE pédagogique -->
+    <script>
+        // 1. RÉCUPÉRATION DES ÉLÉMENTS HTML
+        // On récupère tous les éléments dont on a besoin
+        const profileSelect = document.getElementById('profile');
+        const roleSelect = document.getElementById('role');
+        const applyBtn = document.getElementById('applyBtn');
+        const parametersDisplay = document.getElementById('parametersDisplay');
+        
+        // Éléments pour afficher les valeurs
+        const selectedRoleDisplay = document.getElementById('selectedRole');
+        const tempValue = document.getElementById('tempValue');
+        const maxTokensValue = document.getElementById('maxTokensValue');
+        const topPValue = document.getElementById('topPValue');
+        const freqPenaltyValue = document.getElementById('freqPenaltyValue');
+        const presPenaltyValue = document.getElementById('presPenaltyValue');
+        const butAttendu = document.getElementById('butAttendu');
+        const profileDescription = document.getElementById('profileDescription');
+        const generatedPrompt = document.getElementById('generatedPrompt');
+        const exampleResponse = document.getElementById('exampleResponse');
+
+        // 2. FONCTION PRINCIPALE AVEC IF/ELSE
+        // Cette fonction est appelée quand on clique sur "Appliquer"
+        function appliquerConfiguration() {
+            // Récupérer les valeurs sélectionnées
+            const profilChoisi = profileSelect.value;
+            const roleChoisi = roleSelect.value;
+
+            // Vérifier qu'un profil et un rôle sont sélectionnés
+            if (profilChoisi === "" || roleChoisi === "") {
+                alert("Veuillez sélectionner un profil ET un rôle !");
+                return; // Arrêter la fonction si pas de sélection
+            }
+
+            // Variables pour stocker les paramètres
+            let temperature = 0;
+            let maxTokens = 0;
+            let topP = 0;
+            let frequencyPenalty = 0;
+            let presencePenalty = 0;
+            let but = "";
+            let description = "";
+            let prompt = "";
+            let exemple = "";
+
+            // 3. IF/ELSE POUR CHAQUE PROFIL
+            // On utilise des if/else pour définir les paramètres selon le profil
+            
+            if (profilChoisi === "factuel-court") {
+                // Profil A : très factuel, court (1 phrase)
+                temperature = 0.3;
+                maxTokens = 60;
+                topP = 0.9;
+                frequencyPenalty = 0.0;
+                presencePenalty = 0.0;
+                but = "1 phrase, factuel, clair (25–40 mots)";
+                description = "Réponse courte et factuelle. Température basse (0.3) pour précision. Peu de tokens (60) pour rester concis.";
+                prompt = "Expliquez en une seule phrase de 25 à 40 mots, avec un vocabulaire simple et de manière factuelle, quand choisir flex/flex-col plutôt que grid grid-cols-… en énoncant un critère clair (1D vs 2D). Sans liste. Sans code.";
+                exemple = "On privilégie flex ou flex-col pour un alignement à un seul axe (ligne ou colonne), tandis que grid grid-cols-… convient aux mises en page bidimensionnelles avec rangées et colonnes simultanées.";
+                
+            } else if (profilChoisi === "factuel-developpe") {
+                // Profil B : factuel, développé (120-160 mots)
+                temperature = 0.4;
+                maxTokens = 250;
+                topP = 0.9;
+                frequencyPenalty = 0.0;
+                presencePenalty = 0.0;
+                but = "Définition + critère + impact (120–160 mots)";
+                description = "Réponse développée et académique. Température modérée (0.4) pour rester factuel. Plus de tokens (250) pour développer.";
+                prompt = "Rédigez un texte de 120 à 160 mots, en ton académique et vocabulaire simple, qui définit flex (mise en page à un axe) et grid (mise en page à deux dimensions), expose le critère 1D vs 2D, puis explique l'impact sur la maintenance et l'évolutivité. Sans liste. Sans code.";
+                exemple = "Flexbox est un système de mise en page unidimensionnel conçu pour aligner des éléments le long d'un seul axe, soit horizontal (flex) soit vertical (flex-col). Grid, en revanche, est un système bidimensionnel permettant de contrôler simultanément les rangées et les colonnes. Le critère de choix repose sur la dimensionnalité : flex pour des flux linéaires, grid pour des structures matricielles. Ce choix impacte directement la maintenance du code, car flex offre une flexibilité locale idéale pour des composants simples, tandis que grid structure globalement le layout, facilitant l'évolution des interfaces complexes. Une architecture bien choisie réduit les surcharges CSS et améliore la lisibilité.";
+                
+            } else if (profilChoisi === "nuance") {
+                // Profil C : bref + nuance (1 phrase, 30-50 mots)
+                temperature = 0.5;
+                maxTokens = 80;
+                topP = 0.95;
+                frequencyPenalty = 0.1;
+                presencePenalty = 0.1;
+                but = "1 phrase, 30–50 mots, + nuance obligatoire";
+                description = "Réponse courte avec nuance. Température légèrement plus haute (0.5) pour la nuance. Penalties légers pour éviter les redites.";
+                prompt = "En une seule phrase de 30 à 50 mots, résumez quand utiliser Flex (flux à un axe) et Grid (composition 2D), en ajoutant une nuance, par exemple Grid pour gabarits répétitifs et Flex pour composants locaux. Sans liste. Sans code.";
+                exemple = "Flex excelle pour l'alignement linéaire de composants locaux le long d'un axe unique, tandis que Grid structure efficacement des layouts bidimensionnels répétitifs, bien que les deux puissent se combiner selon la complexité.";
+                
+            } else if (profilChoisi === "creatif-court") {
+                // Profil D : créatif mais court (1 phrase)
+                temperature = 0.8;
+                maxTokens = 70;
+                topP = 0.95;
+                frequencyPenalty = 0.3;
+                presencePenalty = 0.2;
+                but = "1 phrase, créatif, critère explicite";
+                description = "Réponse créative et courte avec métaphore. Température haute (0.8) pour créativité. Penalties moyens pour originalité.";
+                prompt = "Rédigez une phrase de 25 à 40 mots, en style créatif mais précis, utilisant une métaphore opposant Flex (file/ligne/colonne fluide) et Grid (damier/gabarit), tout en énonçant un critère simple (1D vs 2D). Sans liste. Sans code.";
+                exemple = "Flex tisse un fil d'éléments le long d'une ligne fluide, tandis que Grid déploie un damier structuré : privilégiez l'un pour le flux unidimensionnel, l'autre pour orchestrer rangées et colonnes.";
+                
+            } else if (profilChoisi === "creatif-developpe") {
+                // Profil E : créatif, développé (150-200 mots)
+                temperature = 0.7;
+                maxTokens = 300;
+                topP = 0.95;
+                frequencyPenalty = 0.2;
+                presencePenalty = 0.3;
+                but = "Comparaison + wrap/auto-fit + contre-exemple + critère (150–200)";
+                description = "Réponse créative et développée. Température assez haute (0.7). Beaucoup de tokens (300). Presence penalty pour diversité.";
+                prompt = "Rédigez un texte de 150 à 200 mots, en style développé et nuancé, comparant flex/flex-col à grid grid-cols-*. Mentionnez flex-wrap vs grid auto-fit/auto-fill, fournissez un contre-exemple d'usage inadapté (Flex forcé pour grille 2D), puis donnez un critère opératoire. Sans liste. Sans code.";
+                exemple = "Flex et Grid répondent à des besoins architecturaux distincts. Flex aligne des éléments sur un axe principal avec flex-wrap pour permettre le retour à la ligne, créant des flux adaptatifs mais linéaires. Grid, au contraire, orchestre simultanément rangées et colonnes grâce à auto-fit et auto-fill, générant des grilles responsives sophistiquées. Le contre-exemple classique ? Forcer Flex pour une galerie d'images bidimensionnelle produit un code fragile, multipliant les conteneurs imbriqués. À l'inverse, Grid simplifie cette structure naturellement. Le critère opératoire : si votre composant nécessite un contrôle explicite sur deux dimensions ou des alignements croisés complexes, Grid s'impose ; pour des séquences fluides d'éléments indépendants, Flex suffit amplement. Cette distinction garantit une base de code maintenable et évolutive.";
+                
+            } else if (profilChoisi === "hybride") {
+                // Profil F : créatif + éviter répétitions (150-200 mots)
+                temperature = 0.7;
+                maxTokens = 300;
+                topP = 0.95;
+                frequencyPenalty = 0.6;
+                presencePenalty = 0.6;
+                but = "Stratégie hybride, anti-redite, mauvaise pratique (150–200)";
+                description = "Réponse créative sans répétitions. Penalties élevés (0.6) pour éviter toute redite. Vocabulaire très varié.";
+                prompt = "Rédigez un texte de 150 à 200 mots, en style créatif et varié, proposant une stratégie hybride (Grid pour le layout macro, Flex pour l'agencement micro). Évitez absolument les répétitions, citez une mauvaise pratique et énoncez une règle simple de décision. Sans liste. Sans code.";
+                exemple = "L'approche optimale combine intelligemment les deux paradigmes : déployez Grid pour orchestrer la structure globale de votre interface (zones principales, navigation, contenu), puis insérez Flex localement pour affiner l'agencement interne des composants. Cette stratégie hybride évite la rigidité d'une solution unique. Mauvaise pratique courante ? Imbriquer frénétiquement des Flexbox pour simuler une grille, générant un échafaudage CSS chaotique et difficile à déboguer. La règle décisionnelle devient limpide : observez la dimensionnalité naturelle de votre besoin. Si plusieurs éléments doivent s'aligner selon deux axes perpendiculaires simultanément, privilégiez Grid sans hésitation. Pour des séquences fluides d'items indépendants le long d'une trajectoire unique, Flex demeure votre allié. Cette distinction pragmatique simplifie vos choix architecturaux quotidiens.";
+                
+            } else {
+                // Cas par défaut (ne devrait jamais arriver)
+                alert("Profil non reconnu !");
+                return;
+            }
+
+            // 4. AFFICHAGE DU RÔLE AVEC IF/ELSE ET ADAPTATION DU PROMPT ET DE L'EXEMPLE
+            // On traduit le code du rôle en texte lisible et on adapte le prompt et l'exemple
+            let roleTexte = "";
+            let prefixeRole = "";
+            
+            if (roleChoisi === "assistant-friendly") {
+                roleTexte = "Assistant Friendly - Ton amical et accessible";
+                prefixeRole = "En tant qu'assistant amical et accessible, ";
+                // Adapter l'exemple pour un ton plus friendly selon le profil
+                if (profilChoisi === "factuel-court") {
+                    exemple = "Salut ! Alors, flex et flex-col, c'est parfait quand tu veux aligner des choses sur une seule ligne ou colonne, tandis que grid grid-cols-… est ton meilleur ami pour créer des grilles avec lignes ET colonnes en même temps !";
+                } else if (profilChoisi === "factuel-developpe") {
+                    exemple = "Hey ! Laisse-moi t'expliquer ça simplement. Flexbox, c'est comme une file d'attente : tout est aligné sur un seul axe, soit horizontal, soit vertical. Super pratique pour des barres de navigation ou des listes ! Grid, par contre, c'est comme un quadrillage : tu peux organiser tes éléments en lignes ET en colonnes simultanément. Le choix ? Si tu veux juste aligner des trucs dans une direction, prends Flex. Si tu as besoin d'une vraie grille avec des rangées et des colonnes, Grid est ton ami ! En plus, Grid te facilite la maintenance pour les layouts complexes, tandis que Flex garde les choses simples pour les petits composants.";
+                }
+                
+            } else if (roleChoisi === "expert-professionnel") {
+                roleTexte = "Expert Professionnel - Ton formel et précis";
+                prefixeRole = "En qualité d'expert professionnel, ";
+                // L'exemple reste formel et technique (exemples par défaut)
+                
+            } else if (roleChoisi === "enseignant-pedagogique") {
+                roleTexte = "Enseignant Pédagogique - Ton éducatif et clair";
+                prefixeRole = "Dans un contexte pédagogique, ";
+                // Adapter pour un ton plus pédagogique
+                if (profilChoisi === "factuel-court") {
+                    exemple = "Retenez cette règle simple : flex et flex-col organisent les éléments sur un seul axe (pensez à une ligne ou une colonne), tandis que grid grid-cols-… permet de créer une structure bidimensionnelle comme un tableau (avec des rangées ET des colonnes à la fois).";
+                } else if (profilChoisi === "nuance") {
+                    exemple = "Comprenez bien la distinction : Flex est idéal pour organiser des éléments enfants le long d'un axe unique (comme des boutons dans une barre d'outils), tandis que Grid excelle dans la création de structures matricielles répétitives (comme une galerie de photos), sachant que vous pouvez combiner les deux approches dans un même projet selon vos besoins.";
+                }
+                
+            } else if (roleChoisi === "creative-writer") {
+                roleTexte = "Creative Writer - Ton créatif et expressif";
+                prefixeRole = "Avec une approche créative, ";
+                // Rendre les exemples encore plus créatifs pour ce rôle
+                if (profilChoisi === "creatif-court") {
+                    exemple = "Imaginez Flex comme un chapelet de perles enfilées sur un fil unique, serpentant élégamment en ligne ou en colonne, tandis que Grid déploie une tapisserie géométrique où chaque élément trouve sa place dans un damier bidimensionnel harmonieux.";
+                }
+                
+            } else if (roleChoisi === "analyste-technique") {
+                roleTexte = "Analyste Technique - Ton analytique et détaillé";
+                prefixeRole = "D'un point de vue analytique et technique, ";
+                // Adapter pour un ton plus technique et analytique
+                if (profilChoisi === "factuel-court") {
+                    exemple = "Flexbox implémente un modèle de disposition unidimensionnel (main-axis et cross-axis, avec un seul axe principal de flux), tandis que CSS Grid propose un système bidimensionnel permettant un contrôle simultané et explicite des axes horizontal (colonnes) et vertical (rangées).";
+                } else if (profilChoisi === "factuel-developpe") {
+                    exemple = "D'un point de vue architectural, Flexbox constitue un système de layout unidimensionnel optimisé pour les flux séquentiels : il distribue l'espace le long d'un axe principal (flex-direction: row ou column), tout en permettant un alignement transversal basique. Grid, à l'inverse, expose une API bidimensionnelle complète avec un système de grille explicite (grid-template-rows/columns) permettant un positionnement matriciel précis. Le critère décisionnel repose sur la dimensionnalité intrinsèque du problème : Flex pour les distributions linéaires monodimensionnelles, Grid pour les structures matricielles nécessitant un contrôle dual-axis. Cette distinction impacte significativement la maintenabilité : Flex minimise la complexité pour les composants atomiques, tandis que Grid réduit drastiquement la verbosité CSS pour les layouts macro-structurels, améliorant ainsi la scalabilité du codebase. L'analyse de performance révèle également que Grid optimise les calculs de layout pour les structures régulières.";
+                }
+                
+            } else {
+                roleTexte = "Rôle non défini";
+                prefixeRole = "";
+            }
+            
+            // Ajouter le préfixe du rôle au prompt
+            prompt = prefixeRole + prompt;
+
+            // 5. AFFICHAGE DES RÉSULTATS
+            // On met à jour l'interface avec les valeurs calculées
+            selectedRoleDisplay.textContent = roleTexte;
+            tempValue.textContent = temperature;
+            maxTokensValue.textContent = maxTokens;
+            topPValue.textContent = topP;
+            freqPenaltyValue.textContent = frequencyPenalty;
+            presPenaltyValue.textContent = presencePenalty;
+            butAttendu.textContent = but;
+            profileDescription.textContent = description;
+            generatedPrompt.textContent = prompt;
+            exampleResponse.textContent = exemple;
+
+            // Afficher la section des paramètres (enlever la classe "hidden")
+            parametersDisplay.classList.remove('hidden');
+
+            // Faire défiler vers les résultats
+            parametersDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // 6. ÉCOUTEUR D'ÉVÉNEMENT
+        // On attend que l'utilisateur clique sur le bouton
+        applyBtn.addEventListener('click', appliquerConfiguration);
+
+        // Bonus : permettre aussi de changer directement les sélections
+        profileSelect.addEventListener('change', function() {
+            if (profileSelect.value && roleSelect.value) {
+                // Si les deux sont sélectionnés, appliquer automatiquement
+                appliquerConfiguration();
+            }
+        });
+
+        roleSelect.addEventListener('change', function() {
+            if (profileSelect.value && roleSelect.value) {
+                // Si les deux sont sélectionnés, appliquer automatiquement
+                appliquerConfiguration();
+            }
+        });
+
+    </script>
+
+</body>
+</html>
