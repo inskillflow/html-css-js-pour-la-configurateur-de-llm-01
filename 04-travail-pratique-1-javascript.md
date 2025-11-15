@@ -714,7 +714,7 @@ if (c) c.remove();
 </details>
 
 <details>
-<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
+<summary>  2. Écran d’alerte rouge “SYSTEM BREACH” (overlay animé) </summary>
 
 
 ## 2. Écran d’alerte rouge “SYSTEM BREACH” (overlay animé)
@@ -774,7 +774,7 @@ if (ov) ov.remove();
 </details>
 
 <details>
-<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
+<summary>  3. Faux “scan de système” + barre de progression dans la console </summary>
 
 ## 3. Faux “scan de système” + barre de progression dans la console
 
@@ -815,7 +815,7 @@ La console “bouge” en continu, barre qui se remplit, très *terminal admin s
 </details>
 
 <details>
-<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
+<summary>  4. Animation de texte qui “se décrypte” (titre de la page) </summary>
 
 ## 4. Animation de texte qui “se décrypte” (titre de la page)
 
@@ -856,7 +856,7 @@ Le titre se met à “glitcher”, puis lettre par lettre il revient à la phras
 </details>
 
 <details>
-<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
+<summary>  5. Vibration / tremblement de l’écran (screen shake) </summary>
 
 ## 5. Vibration / tremblement de l’écran (screen shake)
 
@@ -899,7 +899,7 @@ La page bouge dans tous les sens pendant 2–3 secondes, puis se stabilise.
 </details>
 
 <details>
-<summary>  1. Vraie animation “Matrix” en plein écran (canvas) </summary>
+<summary>  6. Combo “animation terminal” dans la console (spinner + log) </summary>
 
 ## 6. Combo “animation terminal” dans la console (spinner + log)
 
