@@ -129,6 +129,42 @@ Déclenché quand on change la valeur d'une liste déroulante ou d'un champ de t
 </script>
 ```
 
+### Testez cette partie sur VSCODE
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+<select id="couleur">
+    <option value="red">Rouge</option>
+    <option value="blue">Bleu</option>
+</select>
+
+<p id="message"></p>
+
+<script>
+    const couleur = document.getElementById('couleur');
+    const message = document.getElementById('message');
+    
+    couleur.addEventListener('change', function() {
+        const valeur = couleur.value;
+        message.textContent = "Vous avez choisi : " + valeur;
+        document.body.style.backgroundColor = valeur;
+    });
+</script>
+
+</body>
+</html>
+```
+
+
+
 ### Exemple du Projet
 
 ```javascript
